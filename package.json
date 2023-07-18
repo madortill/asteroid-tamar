@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@seregpie/vuedragdrop": "^18.8.13",
     "vue": "^3.2.45"
   },
   "devDependencies": {

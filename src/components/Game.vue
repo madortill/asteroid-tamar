@@ -1,7 +1,7 @@
 <template>
   <div id="game">
     <img class="spaceship" src="@/assets/spaceship-without-fire.svg" alt="spaceship">
-    <img class="aim" draggable="true" @dragstart="startDrag" @click="checkEl" src="@/assets/aim.png" alt="aim">
+    <img class="aim" draggable="true" @drag-start="startDrag" @click="checkEl" src="@/assets/aim.png" alt="aim">
     <div class="lives">
       <img class="star" v-for="index in lives" :key="index" src="@/assets/star.svg" alt="star">
     </div>
@@ -21,6 +21,7 @@
         <p>-10</p>
       </div>
     </div>
+    <div class="wrong-drop" @drop="wrongDrop" @dragover.prevent @dragenter.prevent></div>
     <div class="drop-zone" @drop="onDrop" @dragover.prevent @dragenter.prevent></div>
     <pop-up v-if="showPopUp"></pop-up>
   </div>
@@ -28,10 +29,13 @@
   
 <script>
 import PopUp from './PopUp.vue';
+import VueDragDrop from '@seregpie/vuedragdrop';
 
   export default {
     name: "game",
     components: {
+      [VueDragDrop.DragItem.name]: VueDragDrop.DragItem,
+    [VueDragDrop.DropArea.name]: VueDragDrop.DropArea,
       PopUp
     },
     data() {
@@ -53,6 +57,14 @@ import PopUp from './PopUp.vue';
       },
       checkEl() {
         console.log("clicked");
+      },
+      generateCoordinats() {
+        let randomX = Math.round(Math.random() * (10 -(-10)) + 10);
+        let randomY = Math.round(Math.random() * (10 -(-10)) + 10);
+        return [randomX, randomY];
+      },
+      wrongDrop() {
+        alert('wrong drop');
       }
     },
     // computed: {
@@ -134,6 +146,16 @@ import PopUp from './PopUp.vue';
     height: 2.5rem;
     border: dashed white 2px;
     border-radius: 50%;
+  }
+
+  .wrong-drop {
+    background-color: blue;
+    height: 18rem;
+    width: 100%;
+    position: absolute;
+    top: 6rem;
+    display: grid;
+    grid-template: repeat(20, 1fr) / repeat(10, 1);
   }
 
 </style>
